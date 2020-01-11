@@ -30,7 +30,8 @@ import android.view.SurfaceView;
 
 public class BallActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
     private static final String  TAG              = "BallActivity";
-
+    private Integer XValue;
+    private Integer YValue;
     private boolean              mIsColorSelected = false;
     private Mat                  mRgba;
     private Scalar               mBlobColorRgba;
@@ -191,9 +192,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             if (contours.size() > 0) {
                 MatOfPoint maxContour = contours.get(maxValIdx);
                 Moments M = Imgproc.moments(maxContour);
-                Integer cX = (int) (M.get_m10() / M.get_m00());
-                Integer cY = (int) (M.get_m01() / M.get_m00());
-                Log.i(TAG, "X:" + cX.toString() + "Y: " + cY.toString());
+                XValue= (int) (M.get_m10() / M.get_m00());
+                YValue = (int) (M.get_m01() / M.get_m00());
             }
             Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
             //detect circle contours and line contours here
@@ -214,5 +214,11 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         Imgproc.cvtColor(pointMatHsv, pointMatRgba, Imgproc.COLOR_HSV2RGB_FULL, 4);
 
         return new Scalar(pointMatRgba.get(0, 0));
+    }
+    public Integer getXValue(){
+        return XValue;
+    }
+    public Integer getYValue(){
+        return YValue;
     }
 }

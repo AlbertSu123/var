@@ -26,11 +26,26 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         });
+        Button pickGoal=(Button)findViewById(R.id.button2);
+        pickGoal.setOnClickListener(new OnClickListener()
+        {   public void onClick(View v)
+        {
+            Intent intent = new Intent(MainActivity.this, PoleActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        });
     }
 
     /** Called when the user taps the Send button */
     public void pickColIntent(View view) {
         Intent intent = new Intent(this, BallActivity.class);
+        startActivity(intent);
+    }
+
+    /** Called when the user taps the Send button */
+    public void pickGoalIntent(View view) {
+        Intent intent = new Intent(this, PoleActivity.class);
         startActivity(intent);
     }
 

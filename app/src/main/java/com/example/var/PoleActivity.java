@@ -10,6 +10,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -39,6 +40,8 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
     private Mat                  mSpectrum;
     private Size                 SPECTRUM_SIZE;
     private Scalar               CONTOUR_COLOR;
+    private Integer              XValue;
+    private Integer              YValue;
     private CameraBridgeViewBase mOpenCvCameraView;
 
     private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
@@ -47,7 +50,6 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS:
                 {
-                    Log.i(TAG, "OpenCV loaded successfully");
                     mOpenCvCameraView.enableView();
                     mOpenCvCameraView.setOnTouchListener(PoleActivity.this);
                 } break;
@@ -93,10 +95,8 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
     {
         super.onResume();
         if (!OpenCVLoader.initDebug()) {
-            Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
         } else {
-            Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
     }
@@ -188,14 +188,16 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
                     maxValIdx = contourIdx;
                 }
             }
+
             if (contours.size() > 0) {
                 MatOfPoint maxContour = contours.get(maxValIdx);
                 Moments M = Imgproc.moments(maxContour);
-                Integer cX = (int) (M.get_m10() / M.get_m00());
-                Integer cY = (int) (M.get_m01() / M.get_m00());
-                Log.i(TAG, "X:" + cX.toString() + "Y: " + cY.toString());
+                XValue = (int) (M.get_m10() / M.get_m00());
+                YValue = (int) (M.get_m01() / M.get_m00());
+                Log.i(TAG, "X:" + XValue.toString() + "Y: " + YValue.toString());
+
             }
-            Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
+
             //detect circle contours and line contours here
             Mat colorLabel = mRgba.submat(4, 68, 4, 68);
             colorLabel.setTo(mBlobColorRgba);
@@ -214,5 +216,11 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
         Imgproc.cvtColor(pointMatHsv, pointMatRgba, Imgproc.COLOR_HSV2RGB_FULL, 4);
 
         return new Scalar(pointMatRgba.get(0, 0));
+    }
+    public Integer getXValue(){
+        return XValue;
+    }
+    public Integer getYValue(){
+        return YValue;
     }
 }
