@@ -28,8 +28,8 @@ import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.SurfaceView;
 
-public class MainActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
-    private static final String  TAG              = "MainActivity";
+public class BallActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
+    private static final String  TAG              = "BallActivity";
 
     private boolean              mIsColorSelected = false;
     private Mat                  mRgba;
@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements OnTouchListener, CvCameraV
                 {
                     Log.i(TAG, "OpenCV loaded successfully");
                     mOpenCvCameraView.enableView();
-                    mOpenCvCameraView.setOnTouchListener(MainActivity.this);
+                    mOpenCvCameraView.setOnTouchListener(BallActivity.this);
                 } break;
                 default:
                 {
@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnTouchListener, CvCameraV
         }
     };
     //This is the constructor
-    public MainActivity() {
+    public BallActivity() {
 
     }
 
@@ -69,8 +69,8 @@ public class MainActivity extends Activity implements OnTouchListener, CvCameraV
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        //Sets the look of the screen when this class is called to be R.layout.activity_main
-        setContentView(R.layout.activity_main);
+        //Sets the look of the screen when this class is called to be R.layout.activity_ball
+        setContentView(R.layout.activity_ball);
 
         //Creates the color blob detection
         mOpenCvCameraView = (CameraBridgeViewBase)findViewById(R.id.color_blob_detection_activity_surface_view);
