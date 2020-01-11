@@ -16,7 +16,10 @@ import org.opencv.core.Size;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.imgproc.Imgproc;
+<<<<<<< HEAD
 import org.opencv.imgproc.Moments;
+=======
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -58,14 +61,21 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             }
         }
     };
+<<<<<<< HEAD
     //This is the constructor
     public BallActivity() {
 
+=======
+    //testing commit 1
+    public BallActivity() {
+        Log.i(TAG, "Instantiated new " + this.getClass());
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
     }
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+<<<<<<< HEAD
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -73,13 +83,25 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         setContentView(R.layout.activity_ball);
 
         //Creates the color blob detection
+=======
+        Log.i(TAG, "called onCreate");
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        setContentView(R.layout.activity_ball);
+
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
         mOpenCvCameraView = (CameraBridgeViewBase)findViewById(R.id.color_blob_detection_activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
 
     @Override
+<<<<<<< HEAD
     //Unused
+=======
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
     public void onPause()
     {
         super.onPause();
@@ -88,7 +110,10 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     }
 
     @Override
+<<<<<<< HEAD
     //Unused
+=======
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
     public void onResume()
     {
         super.onResume();
@@ -101,14 +126,20 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         }
     }
 
+<<<<<<< HEAD
     //Unused
+=======
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
     public void onDestroy() {
         super.onDestroy();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
     }
 
+<<<<<<< HEAD
     //Initializes values
+=======
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
     public void onCameraViewStarted(int width, int height) {
         mRgba = new Mat(height, width, CvType.CV_8UC4);
         mDetector = new ColorBlobDetector();
@@ -132,9 +163,16 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         int x = (int)event.getX() - xOffset;
         int y = (int)event.getY() - yOffset;
+<<<<<<< HEAD
         //At this point, the x and the y coordinates of the touch are the variables x and y
 
         if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;//This handles offscreen touches
+=======
+
+        Log.i(TAG, "Touched: Touch image coordinates: (" + x + ", " + y + ")");
+
+        if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
 
         Rect touchedRect = new Rect();
 
@@ -157,7 +195,13 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
 
+<<<<<<< HEAD
         //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
+=======
+        Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
+                ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
+
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
         mDetector.setHsvColor(mBlobColorHsv);
 
         Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE, 0, 0, Imgproc.INTER_LINEAR_EXACT);
@@ -172,6 +216,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         mRgba = inputFrame.rgba();
+<<<<<<< HEAD
         //change
         if (mIsColorSelected) {
             mDetector.process(mRgba);
@@ -191,13 +236,24 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             MatOfPoint maxContour = contours.get(maxValIdx);
             Moments M = Imgproc.moments(maxContour);
             Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
+=======
+
+        if (mIsColorSelected) {
+            mDetector.process(mRgba);
+            List<MatOfPoint> contours = mDetector.getContours();
+            Log.e(TAG, "Contours count: " + contours.size());
+            Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
             //detect circle contours and line contours here
             Mat colorLabel = mRgba.submat(4, 68, 4, 68);
             colorLabel.setTo(mBlobColorRgba);
 
             Mat spectrumLabel = mRgba.submat(4, 4 + mSpectrum.rows(), 70, 70 + mSpectrum.cols());
             mSpectrum.copyTo(spectrumLabel);
+<<<<<<< HEAD
 
+=======
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
         }
 
         return mRgba;
@@ -210,4 +266,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
