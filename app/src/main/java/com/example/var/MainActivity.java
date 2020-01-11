@@ -35,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         });
+        Button startVar=(Button)findViewById(R.id.button3);
+//        pickGoal.setOnClickListener(new OnClickListener()
+//        {   public void onClick(View v)
+//        {
+//            Intent intent = new Intent(MainActivity.this, LiveVar.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//        });
     }
 
     /** Called when the user taps the Send button */
@@ -49,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+//    /** Called when the user taps the Send button */
+//    public void startVar(View view) {
+//        Intent intent = new Intent(this, LiveVar.class);
+//        startActivity(intent);
+//    }
 }
 
 

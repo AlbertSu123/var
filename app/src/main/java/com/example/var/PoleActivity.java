@@ -28,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.SurfaceView;
+import android.content.Intent;
 
 public class PoleActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
     private static final String  TAG              = "BallActivity";
@@ -195,7 +196,8 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
                 XValue = (int) (M.get_m10() / M.get_m00());
                 YValue = (int) (M.get_m01() / M.get_m00());
                 Log.i(TAG, "X:" + XValue.toString() + "Y: " + YValue.toString());
-
+//                setXValue();
+//                setYValue();
             }
 
             //detect circle contours and line contours here
@@ -217,10 +219,14 @@ public class PoleActivity extends Activity implements OnTouchListener, CvCameraV
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
-    public Integer getXValue(){
-        return XValue;
-    }
-    public Integer getYValue(){
-        return YValue;
-    }
+//    public void setXValue(){
+//        Intent in = new Intent(this, LiveVar.class);
+//        in.putExtra("GOAL_POST_X", XValue);
+//        startActivity(in);
+//    }
+//    public void setYValue(){
+//        Intent in = new Intent(this, LiveVar.class);
+//        in.putExtra("GOAL_POST_Y", YValue);
+//        startActivity(in);
+//    }
 }

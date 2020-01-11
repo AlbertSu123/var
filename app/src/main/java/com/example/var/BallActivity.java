@@ -19,6 +19,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -194,6 +195,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
                 Moments M = Imgproc.moments(maxContour);
                 XValue= (int) (M.get_m10() / M.get_m00());
                 YValue = (int) (M.get_m01() / M.get_m00());
+//                setXValue();
+//                setYValue();
             }
             Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
             //detect circle contours and line contours here
@@ -215,10 +218,14 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
-    public Integer getXValue(){
-        return XValue;
-    }
-    public Integer getYValue(){
-        return YValue;
-    }
+//    public void setXValue(){
+//        Intent in = new Intent(this, LiveVar.class);
+//        in.putExtra("BALL_X", XValue);
+//        startActivity(in);
+//    }
+//    public void setYValue(){
+//        Intent in = new Intent(this, LiveVar.class);
+//        in.putExtra("BALL_Y", YValue);
+//        startActivity(in);
+//    }
 }
