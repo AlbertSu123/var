@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VAR</string>
+    <string name="pick_ball_color">Pick Ball Color</string>
 </resources>
