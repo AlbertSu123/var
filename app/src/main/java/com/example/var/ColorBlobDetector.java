@@ -8,18 +8,17 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 public class ColorBlobDetector {
-    //imgproc is the same as cv2 for python
     // Lower and Upper bounds for range checking in HSV color space
     private Scalar mLowerBound = new Scalar(0);
     private Scalar mUpperBound = new Scalar(0);
     // Minimum contour area in percent for contours filtering
     private static double mMinContourArea = 0.1;
     // Color radius for range checking in HSV color space
+    //Change this for a larger range of colors
     private Scalar mColorRadius = new Scalar(25,50,50,0);
     private Mat mSpectrum = new Mat();
     private List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
@@ -70,9 +69,11 @@ public class ColorBlobDetector {
     }
 
     public void process(Mat rgbaImage) {
+        //Downsizes resolution of image https://docs.opencv.org/2.4/doc/tutorials/imgproc/pyramids/pyramids.html
+        //Link has a good graphic illustrating this
         Imgproc.pyrDown(rgbaImage, mPyrDownMat);
         Imgproc.pyrDown(mPyrDownMat, mPyrDownMat);
-
+        //Converts to a different colorspace, in this case HSV
         Imgproc.cvtColor(mPyrDownMat, mHsvMat, Imgproc.COLOR_RGB2HSV_FULL);
 
         Core.inRange(mHsvMat, mLowerBound, mUpperBound, mMask);
@@ -94,44 +95,14 @@ public class ColorBlobDetector {
 
         // Filter contours by area and resize to fit the original image size
         mContours.clear();
-//        each = contours.iterator();
-//        while (each.hasNext()) {
-//            MatOfPoint contour = each.next();
-//            if (Imgproc.contourArea(contour) > mMinContourArea*maxArea) {
-//                Core.multiply(contour, new Scalar(4,4), contour);
-//                mContours.add(contour);
-//            }
-//        }
         each = contours.iterator();
-        ArrayList<MatOfPoint> contour_list = new ArrayList<>();
-        while (each.hasNext())
-        {
+        while (each.hasNext()) {
             MatOfPoint contour = each.next();
-            MatOfPoint2f newcontour = new MatOfPoint2f(contour.toArray());
-            MatOfPoint2f approx2f = new MatOfPoint2f();
-            Imgproc.approxPolyDP(newcontour, approx2f, .01 * Imgproc.arcLength(newcontour, true), true);
-            Double area = Imgproc.contourArea(contour);
-            if (approx2f.toList().size() > 8 && area > 30) {
-                mContours.add(contour);
-            }
             if (Imgproc.contourArea(contour) > mMinContourArea*maxArea) {
                 Core.multiply(contour, new Scalar(4,4), contour);
                 mContours.add(contour);
             }
-//            MatOfPoint2f approx2f = new MatOfPoint2f();
-//            MatOfPoint2f newcontour = new MatOfPoint2f(contour.toArray());
-//            Double ep = .01 * Imgproc.arcLength(newcontour, true);
-//            Imgproc.approxPolyDP(newcontour, approx2f, ep, true);
-//            Double area = Imgproc.contourArea(contour);
-//            if (approx2f.size() > 8 && area > 30) {
-//                mContours.add(contour);
-//            }
         }
-
-
-        //only display the contours that are circular in (for the ball)
-        //First filter for shape, then filter for color
-        //http://layer0.authentise.com/detecting-circular-shapes-using-contours.html
     }
 
     public List<MatOfPoint> getContours() {
