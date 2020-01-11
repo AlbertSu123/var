@@ -16,6 +16,7 @@ import org.opencv.core.Size;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.imgproc.Moments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -57,27 +58,28 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             }
         }
     };
-    //testing commit 1
+    //This is the constructor
     public BallActivity() {
-        Log.i(TAG, "Instantiated new " + this.getClass());
+
     }
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        //Sets the look of the screen when this class is called to be R.layout.activity_ball
         setContentView(R.layout.activity_ball);
 
+        //Creates the color blob detection
         mOpenCvCameraView = (CameraBridgeViewBase)findViewById(R.id.color_blob_detection_activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
 
     @Override
+    //Unused
     public void onPause()
     {
         super.onPause();
@@ -86,6 +88,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     }
 
     @Override
+    //Unused
     public void onResume()
     {
         super.onResume();
@@ -98,12 +101,14 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         }
     }
 
+    //Unused
     public void onDestroy() {
         super.onDestroy();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
     }
 
+    //Initializes values
     public void onCameraViewStarted(int width, int height) {
         mRgba = new Mat(height, width, CvType.CV_8UC4);
         mDetector = new ColorBlobDetector();
@@ -127,10 +132,9 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         int x = (int)event.getX() - xOffset;
         int y = (int)event.getY() - yOffset;
+        //At this point, the x and the y coordinates of the touch are the variables x and y
 
-        Log.i(TAG, "Touched: Touch image coordinates: (" + x + ", " + y + ")");
-
-        if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;
+        if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;//This handles offscreen touches
 
         Rect touchedRect = new Rect();
 
@@ -153,9 +157,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
 
-        Log.i(TAG, "Touched rgba color: (" + mBlobColorRgba.val[0] + ", " + mBlobColorRgba.val[1] +
-                ", " + mBlobColorRgba.val[2] + ", " + mBlobColorRgba.val[3] + ")");
-
+        //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
         mDetector.setHsvColor(mBlobColorHsv);
 
         Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE, 0, 0, Imgproc.INTER_LINEAR_EXACT);
@@ -170,18 +172,32 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         mRgba = inputFrame.rgba();
-
+        //change
         if (mIsColorSelected) {
             mDetector.process(mRgba);
             List<MatOfPoint> contours = mDetector.getContours();
-            Log.e(TAG, "Contours count: " + contours.size());
-            Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
+            //This draws the contours onto the screen
+            double maxVal = 0;
+            int maxValIdx = 0;
+            for (int contourIdx = 0; contourIdx < contours.size(); contourIdx++)
+            {
+                double contourArea = Imgproc.contourArea(contours.get(contourIdx));
+                if (maxVal < contourArea)
+                {
+                    maxVal = contourArea;
+                    maxValIdx = contourIdx;
+                }
+            }
+            MatOfPoint maxContour = contours.get(maxValIdx);
+            Moments M = Imgproc.moments(maxContour);
+            Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
             //detect circle contours and line contours here
             Mat colorLabel = mRgba.submat(4, 68, 4, 68);
             colorLabel.setTo(mBlobColorRgba);
 
             Mat spectrumLabel = mRgba.submat(4, 4 + mSpectrum.rows(), 70, 70 + mSpectrum.cols());
             mSpectrum.copyTo(spectrumLabel);
+
         }
 
         return mRgba;
