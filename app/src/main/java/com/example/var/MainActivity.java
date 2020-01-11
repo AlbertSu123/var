@@ -171,18 +171,32 @@ public class MainActivity extends Activity implements OnTouchListener, CvCameraV
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         mRgba = inputFrame.rgba();
-
+        //change
         if (mIsColorSelected) {
             mDetector.process(mRgba);
             List<MatOfPoint> contours = mDetector.getContours();
             //This draws the contours onto the screen
-            Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
+            double maxVal = 0;
+            int maxValIdx = 0;
+            for (int contourIdx = 0; contourIdx < contours.size(); contourIdx++)
+            {
+                double contourArea = Imgproc.contourArea(contours.get(contourIdx));
+                if (maxVal < contourArea)
+                {
+                    maxVal = contourArea;
+                    maxValIdx = contourIdx;
+                }
+            }
+            MatOfPoint maxContour = contours.get(maxValIdx);
+            Moments M = Imgproc.moments(maxContour);
+            Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
             //detect circle contours and line contours here
             Mat colorLabel = mRgba.submat(4, 68, 4, 68);
             colorLabel.setTo(mBlobColorRgba);
 
             Mat spectrumLabel = mRgba.submat(4, 4 + mSpectrum.rows(), 70, 70 + mSpectrum.cols());
             mSpectrum.copyTo(spectrumLabel);
+
         }
 
         return mRgba;
