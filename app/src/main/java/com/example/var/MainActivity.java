@@ -6,14 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
-<<<<<<< HEAD
 
 import com.example.var.BallActivity;
 
-=======
-
-import com.example.var.BallActivity;
->>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-<<<<<<< HEAD
 }
-=======
 
-}
->>>>>>> e0614638283dbdb596359f632b512b1f2345e7fc
+
