@@ -7,17 +7,16 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Instructions extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+public class Instructions3 extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_instructions);
-        Button pickColor=(Button)findViewById(R.id.button3);
+        setContentView(R.layout.activity_instructions3);
+        Button pickColor=(Button)findViewById(R.id.button5);
         pickColor.setOnClickListener(new View.OnClickListener()
         {   public void onClick(View v)
         {
-            Intent intent = new Intent(Instructions.this, Instructions2.class);
+            Intent intent = new Intent(Instructions3.this, BallActivity.class);
             startActivity(intent);
             finish();
         }
@@ -25,10 +24,8 @@ public class Instructions extends AppCompatActivity {
     }
 
     /** Called when the user taps the Send button */
-    public void pickColIntent3(View view) {
-        Intent intent = new Intent(this, Instructions2.class);
+    public void pickColIntent5(View view) {
+        Intent intent = new Intent(this, BallActivity.class);
         startActivity(intent);
     }
-
-
 }

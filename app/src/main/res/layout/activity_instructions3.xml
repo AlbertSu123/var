@@ -8,7 +8,7 @@
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="54dp"
         android:layout_gravity="center_vertical"
         android:background="@color/colorPrimary"
         android:text="Instructions for Use"
@@ -17,52 +17,60 @@
         android:typeface="monospace" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editText4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Step 1:"
+        android:text="Step 3:"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editText5"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Point the camera at the ball and tap"
+        android:text="Place the camera along the goaline"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editText6"
         android:layout_width="match_parent"
-        android:layout_height="111dp"
+        android:layout_height="58dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="the ball on your screen"
+        android:text="in a manner such that both goal posts "
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="lie in the same plane"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="227dp"
-        android:background="@drawable/instructions1"
-        />
+        android:layout_height="367dp"
+        android:background="@drawable/instructions3" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button5"
         android:layout_width="match_parent"
-        android:layout_height="143dp"
+        android:layout_height="276dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:backgroundTint="@color/colorAccent"
-        android:onClick="pickColIntent3"
-        android:text="NEXT"
+        android:onClick="pickColIntent5"
+        android:text="Start Goal Line Technology"
+        android:textSize="30dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="50dp"
         android:typeface="monospace" />
-
 </LinearLayout>

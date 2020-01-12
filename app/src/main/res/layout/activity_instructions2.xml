@@ -4,7 +4,6 @@
     android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
@@ -17,52 +16,60 @@
         android:typeface="monospace" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editText4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Step 1:"
+        android:text="Step 2:"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editText5"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
+        android:layout_height="75dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Point the camera at the ball and tap"
+        android:text="Point the camera at the goalposts"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editText6"
         android:layout_width="match_parent"
-        android:layout_height="111dp"
+        android:layout_height="73dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="the ball on your screen"
+        android:text="and tap any part of the goalposts"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="on your screen"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="227dp"
-        android:background="@drawable/instructions1"
-        />
+        android:layout_height="239dp"
+        android:background="@drawable/instructions2" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button4"
         android:layout_width="match_parent"
-        android:layout_height="143dp"
+        android:layout_height="276dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:backgroundTint="@color/colorAccent"
-        android:onClick="pickColIntent3"
+        android:onClick="pickColIntent4"
         android:text="NEXT"
-        android:textColor="@color/colorPrimaryDark"
         android:textSize="50dp"
+        android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
-
 </LinearLayout>

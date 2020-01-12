@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         }
         });
         Button pickColor2=(Button)findViewById(R.id.button2);
-        pickColor.setOnClickListener(new OnClickListener()
+        pickColor2.setOnClickListener(new OnClickListener()
         {   public void onClick(View v)
         {
             Intent intent = new Intent(MainActivity.this, Instructions.class);
