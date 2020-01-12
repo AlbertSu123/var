@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/colorPrimary"
+        android:text="Instructions for Use"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="28dp"
+        android:typeface="monospace" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Step 3:"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Place the camera along the goal"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=" line in a manner such that both"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=" goal posts lie in the same plane.s"
+        android:textSize="18dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="283dp"
+        android:background="@drawable/instructions3" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="276dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="pickColIntent5"
+        android:text="Start Goal Line Technology"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
+</LinearLayout>

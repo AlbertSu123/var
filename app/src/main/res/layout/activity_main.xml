@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    android:orientation="vertical"
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:layout_weight="1.0"
+        android:layout_width="131dp"
+        android:layout_height="102dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorAccent"
         android:onClick="pickColIntent"
-        android:text="@string/pick_ball_color" />
+        android:text="Goal Line Technology"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="0dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="1.0"
-        android:onClick="pickColIntent"
-        android:text="Pick Goal Color" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="0dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="1.0"
-        android:onClick="startVar"
-        android:text="Start Var!" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="102dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="pickColIntent2"
+        android:text="Instructions"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
 </LinearLayout>

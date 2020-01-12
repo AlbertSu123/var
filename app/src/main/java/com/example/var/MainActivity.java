@@ -26,15 +26,15 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         });
-        Button startVar=(Button)findViewById(R.id.button3);
-//        pickGoal.setOnClickListener(new OnClickListener()
-//        {   public void onClick(View v)
-//        {
-//            Intent intent = new Intent(MainActivity.this, LiveVar.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        });
+        Button pickColor2=(Button)findViewById(R.id.button2);
+        pickColor2.setOnClickListener(new OnClickListener()
+        {   public void onClick(View v)
+        {
+            Intent intent = new Intent(MainActivity.this, Instructions.class);
+            startActivity(intent);
+            finish();
+        }
+        });
     }
 
     /** Called when the user taps the Send button */
@@ -42,13 +42,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BallActivity.class);
         startActivity(intent);
     }
+    /** Called when the user taps the Send button */
+    public void pickColIntent2(View view) {
+        Intent intent = new Intent(this, Instructions.class);
+        startActivity(intent);
+    }
 
-
-//    /** Called when the user taps the Send button */
-//    public void startVar(View view) {
-//        Intent intent = new Intent(this, LiveVar.class);
-//        startActivity(intent);
-//    }
 }
-
-

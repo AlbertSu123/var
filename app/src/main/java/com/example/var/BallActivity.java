@@ -10,6 +10,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -17,7 +18,12 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
+import org.opencv.core.Point;
 
+import android.app.Activity;
+import android.widget.Toast;
+import android.widget.Button;
+import android.app.AlertDialog;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,8 +37,10 @@ import android.view.SurfaceView;
 
 public class BallActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
     private static final String TAG = "BallActivity";
+    private boolean goalScored = false;
     private boolean mIsColorSelected_ball = false;
-    private Integer numScreenTouches = 0;
+    private boolean goalDetectionPhase = false;
+    private Integer numScreenTouches;
     private Mat mRgba_ball;
     private Scalar mBlobColorRgba_ball;
     private Scalar mBlobColorHsv_ball;
@@ -108,10 +116,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     public void onResume() {
         super.onResume();
         if (!OpenCVLoader.initDebug()) {
-            Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
         } else {
-            Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
     }
@@ -121,6 +127,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         super.onDestroy();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
+        numScreenTouches = 0;
     }
 
     //Initializes values
@@ -139,7 +146,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         mBlobColorRgba_goal = new Scalar(255);
         mBlobColorHsv_goal = new Scalar(255);
         SPECTRUM_SIZE_goal = new Size(200, 64);
-        CONTOUR_COLOR_goal = new Scalar(255, 0, 0, 255);
+        CONTOUR_COLOR_goal = new Scalar(0, 255, 0, 255);
     }
 
     public void onCameraViewStopped() {
@@ -148,11 +155,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        Log.i(TAG, numScreenTouches.toString());
-        if(numScreenTouches==0){
-            Log.w(TAG, "0 touch");
-
-            numScreenTouches++;
+        if(mIsColorSelected_ball == false){
+            Log.e(TAG, "SELECTING FOR BALL COLOR");
             int cols = mRgba_ball.cols();
             int rows = mRgba_ball.rows();
 
@@ -182,14 +186,15 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             // Calculate average color of touched region
             mBlobColorHsv_ball = Core.sumElems(touchedRegionHsv);
             int pointCount = touchedRect.width * touchedRect.height;
-            for (int i = 0; i < mBlobColorHsv_ball.val.length; i++)
+            for (int i = 0; i < mBlobColorHsv_ball.val.length; i++) {
                 mBlobColorHsv_ball.val[i] /= pointCount;
-
+            }
             mBlobColorRgba_ball = converScalarHsv2Rgba(mBlobColorHsv_ball);
 
             //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
             mDetector_ball.setHsvColor(mBlobColorHsv_ball);
-            Log.w(TAG, mDetector_ball.getSpectrum().toString()+"SetHSV color ball");
+            Log.e(TAG, "SetHSV color ball");
+
 
             Imgproc.resize(mDetector_ball.getSpectrum(), mSpectrum_ball, SPECTRUM_SIZE_ball, 0, 0, Imgproc.INTER_LINEAR_EXACT);
 
@@ -200,9 +205,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
             return true; // don't need subsequent touch events
         }
-        else if(numScreenTouches>5){
-            Log.w(TAG, "1 touch");
-            numScreenTouches++;
+        else if(mIsColorSelected_ball && mIsColorSelected_goal == false){
+            Log.e(TAG, "SELECTING FOR GOAL COLOR");
             int cols = mRgba_goal.cols();
             int rows = mRgba_goal.rows();
 
@@ -237,10 +241,12 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             }
 
             mBlobColorRgba_goal = converScalarHsv2Rgba(mBlobColorHsv_goal);
-
+            if (mBlobColorHsv_goal == mBlobColorHsv_ball){
+                Log.e(TAG, "select a different color");
+                return true;
+            }
             //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
             mDetector_goal.setHsvColor(mBlobColorHsv_goal);
-            Log.w(TAG, mDetector_goal.getSpectrum().toString()+"SetHSV color");
             Imgproc.resize(mDetector_goal.getSpectrum(), mSpectrum_goal, SPECTRUM_SIZE_goal, 0, 0, Imgproc.INTER_LINEAR_EXACT);
 
             mIsColorSelected_goal = true;
@@ -251,18 +257,57 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             return false; // false for don't need subsequent touch events
         }
         else{
-            numScreenTouches++;
             return false;
         }
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
+        if(goalDetectionPhase == false){
+            return coordinateFinder(inputFrame);
+        }
+        else{
+            Log.i(TAG, "in Frame by Frame processing");
+            //We are in the goal detection phase
+            CvCameraViewFrame screenshot = inputFrame;
+            mRgba_goal = inputFrame.rgba();
+            mDetector_goal.process(mRgba_goal);
+            List<MatOfPoint> contours_goal = mDetector_goal.getContours();
+            double maxVal = 0;
+            Integer maxValIdx = -1;
+            for (int contourIdx = 0; contourIdx < contours_goal.size(); contourIdx++) {
+                double contourArea = Imgproc.contourArea(contours_goal.get(contourIdx));
+                if (maxVal < contourArea) {
+                    maxVal = contourArea;
+                    maxValIdx = contourIdx;
+                }
+            }
+            Double ballstatus = 0.0;
+            if (contours_goal.size() > 0) {
+                MatOfPoint maxContour = contours_goal.get(maxValIdx);
+                MatOfPoint2f  maxContour2f = new MatOfPoint2f( maxContour.toArray() );
+                Point ballcoordinates = new Point(xball, yball);
+                ballstatus = Imgproc.pointPolygonTest(maxContour2f, ballcoordinates, false);
+            }
+            if (ballstatus > 0){
+                goalScored = true;
+            }
+            else if (ballstatus == 0){
+                goalScored = false;
+            }
+            else{
+                goalScored = false;
+            }
+            return mRgba_ball;
+        }
+    }
+
+    public Mat coordinateFinder(CvCameraViewFrame inputFrame){
         mRgba_goal = inputFrame.rgba();
         mRgba_ball = inputFrame.rgba();
         //change
         if (mIsColorSelected_ball && mIsColorSelected_goal) {
-            mDetector_ball.process(mRgba_goal);
-            mDetector_goal.process(mRgba_ball);
+            mDetector_ball.process(mRgba_ball);
+            mDetector_goal.process(mRgba_goal);
             List<MatOfPoint> contours_ball = mDetector_ball.getContours();
             List<MatOfPoint> contours_goal = mDetector_goal.getContours();
             //This draws the contours onto the screen
@@ -277,6 +322,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             }
             if (contours_ball.size() > 0) {
                 MatOfPoint maxContour = contours_ball.get(maxValIdx);
+                Log.w(TAG, "Drawing contour");
+                Imgproc.drawContours(mRgba_ball, contours_ball, maxValIdx, CONTOUR_COLOR_ball, 10);
                 Moments M = Imgproc.moments(maxContour);
                 xball = (int) (M.get_m10() / M.get_m00());
                 yball = (int) (M.get_m01() / M.get_m00());
@@ -292,39 +339,38 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             }
             if (contours_goal.size() > 0) {
                 MatOfPoint maxContour = contours_goal.get(maxValIdx);
+                //Imgproc.drawContours(mRgba_ball, contours_goal, maxValIdx, CONTOUR_COLOR_goal, 10);
                 Moments M = Imgproc.moments(maxContour);
                 xgoal = (int) (M.get_m10() / M.get_m00());
                 ygoal = (int) (M.get_m01() / M.get_m00());
             }
-            //detect circle contours and line contours here
-            Mat colorLabel = mRgba_ball.submat(4, 68, 4, 68);
-            colorLabel.setTo(mBlobColorRgba_ball);
-
-            Mat spectrumLabel = mRgba_ball.submat(4, 4 + mSpectrum_ball.rows(), 70, 70 + mSpectrum_ball.cols());
-            mSpectrum_ball.copyTo(spectrumLabel);
-
         }
         if (xball != null && yball != null && xgoal != null && ygoal!= null){
-            Log.e(TAG, "xball:"+xball.toString()+"yball"+yball.toString());
-            Log.e(TAG, "xgoal"+xgoal.toString()+"ygoal"+ygoal.toString());
+            Log.i(TAG, "xball:"+xball.toString()+"yball"+yball.toString());
+            Log.i(TAG, "xgoal"+xgoal.toString()+"ygoal"+ygoal.toString());
             checkCollision();
         }
-
-
         return mRgba_ball;
     }
-
     public void checkCollision(){
         Double distancebetween = 0.0;
-        Double maxdistancebetween = 50.0;
+        Double maxdistancebetween = 150.0;
         distancebetween = Math.sqrt(Math.pow((xball - xgoal),2) + Math.pow((yball - ygoal),2));
         if (distancebetween < maxdistancebetween) {
             //call method here to launch a new class
-            Log.w(TAG, distancebetween.toString());
+            goalDetectionPhase = true;
             Log.w(TAG, "The distance is close enough to warrant a collision");
+            runOnUiThread(new Runnable()
+            {
+                public void run()
+                {
+                    Button playButton = (Button) findViewById(R.id.button);
+                    playButton.setVisibility(View.VISIBLE);
+                }
+            });
         }
-
     }
+
     private Scalar converScalarHsv2Rgba(Scalar hsvColor) {
         Mat pointMatRgba = new Mat();
         Mat pointMatHsv = new Mat(1, 1, CvType.CV_8UC3, hsvColor);
@@ -332,4 +378,5 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
+
 }
