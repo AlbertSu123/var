@@ -30,42 +30,57 @@ import android.view.View.OnTouchListener;
 import android.view.SurfaceView;
 
 public class BallActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
-    private static final String  TAG              = "BallActivity";
-    private Integer XValue;
-    private Integer YValue;
-    private boolean              mIsColorSelected = false;
-    private Mat                  mRgba;
-    private Scalar               mBlobColorRgba;
-    private Scalar               mBlobColorHsv;
-    private ColorBlobDetector    mDetector;
-    private Mat                  mSpectrum;
-    private Size                 SPECTRUM_SIZE;
-    private Scalar               CONTOUR_COLOR;
-    private CameraBridgeViewBase mOpenCvCameraView;
+    private static final String TAG = "BallActivity";
+    private boolean mIsColorSelected_ball = false;
+    private Integer numScreenTouches = 0;
+    private Mat mRgba_ball;
+    private Scalar mBlobColorRgba_ball;
+    private Scalar mBlobColorHsv_ball;
+    private ColorBlobDetector mDetector_ball;
+    private Mat mSpectrum_ball;
+    private Size SPECTRUM_SIZE_ball;
+    private Scalar CONTOUR_COLOR_ball;
+    private Integer xball;
+    private Integer yball;
 
-    private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
+    private boolean mIsColorSelected_goal = false;
+    private Scalar mBlobColorRgba_goal;
+    private Mat mRgba_goal;
+    private Scalar mBlobColorHsv_goal;
+    private ColorBlobDetector mDetector_goal;
+    private Mat mSpectrum_goal;
+    private Size SPECTRUM_SIZE_goal;
+    private Scalar CONTOUR_COLOR_goal;
+    private CameraBridgeViewBase mOpenCvCameraView;
+    private Integer xgoal;
+    private Integer ygoal;
+
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
+                case LoaderCallbackInterface.SUCCESS: {
                     Log.i(TAG, "OpenCV loaded successfully");
                     mOpenCvCameraView.enableView();
                     mOpenCvCameraView.setOnTouchListener(BallActivity.this);
-                } break;
-                default:
-                {
+                }
+                break;
+                default: {
                     super.onManagerConnected(status);
-                } break;
+                }
+                break;
             }
         }
     };
+
     //This is the constructor
     public BallActivity() {
 
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,15 +90,14 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         setContentView(R.layout.activity_ball);
 
         //Creates the color blob detection
-        mOpenCvCameraView = (CameraBridgeViewBase)findViewById(R.id.color_blob_detection_activity_surface_view);
+        mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.color_blob_detection_activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
 
     @Override
     //Unused
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
@@ -91,8 +105,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
     @Override
     //Unused
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         if (!OpenCVLoader.initDebug()) {
             Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
@@ -112,105 +125,206 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
     //Initializes values
     public void onCameraViewStarted(int width, int height) {
-        mRgba = new Mat(height, width, CvType.CV_8UC4);
-        mDetector = new ColorBlobDetector();
-        mSpectrum = new Mat();
-        mBlobColorRgba = new Scalar(255);
-        mBlobColorHsv = new Scalar(255);
-        SPECTRUM_SIZE = new Size(200, 64);
-        CONTOUR_COLOR = new Scalar(255,0,0,255);
+        mRgba_ball = new Mat(height, width, CvType.CV_8UC4);
+        mDetector_ball = new ColorBlobDetector();
+        mSpectrum_ball = new Mat();
+        mBlobColorRgba_ball = new Scalar(255);
+        mBlobColorHsv_ball = new Scalar(255);
+        SPECTRUM_SIZE_ball = new Size(200, 64);
+        CONTOUR_COLOR_ball = new Scalar(255, 0, 0, 255);
+
+        mRgba_goal = new Mat(height, width, CvType.CV_8UC4);
+        mDetector_goal = new ColorBlobDetector();
+        mSpectrum_goal = new Mat();
+        mBlobColorRgba_goal = new Scalar(255);
+        mBlobColorHsv_goal = new Scalar(255);
+        SPECTRUM_SIZE_goal = new Size(200, 64);
+        CONTOUR_COLOR_goal = new Scalar(255, 0, 0, 255);
     }
 
     public void onCameraViewStopped() {
-        mRgba.release();
+        mRgba_ball.release();
+        mRgba_goal.release();
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        int cols = mRgba.cols();
-        int rows = mRgba.rows();
+        Log.i(TAG, numScreenTouches.toString());
+        if(numScreenTouches==0){
+            Log.w(TAG, "0 touch");
 
-        int xOffset = (mOpenCvCameraView.getWidth() - cols) / 2;
-        int yOffset = (mOpenCvCameraView.getHeight() - rows) / 2;
+            numScreenTouches++;
+            int cols = mRgba_ball.cols();
+            int rows = mRgba_ball.rows();
 
-        int x = (int)event.getX() - xOffset;
-        int y = (int)event.getY() - yOffset;
-        //At this point, the x and the y coordinates of the touch are the variables x and y
+            int xOffset = (mOpenCvCameraView.getWidth() - cols) / 2;
+            int yOffset = (mOpenCvCameraView.getHeight() - rows) / 2;
 
-        if ((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;//This handles offscreen touches
+            int x = (int) event.getX() - xOffset;
+            int y = (int) event.getY() - yOffset;
+            //At this point, the x and the y coordinates of the touch are the variables x and y
 
-        Rect touchedRect = new Rect();
+            if ((x < 0) || (y < 0) || (x > cols) || (y > rows))
+                return false;//This handles offscreen touches
 
-        touchedRect.x = (x>4) ? x-4 : 0;
-        touchedRect.y = (y>4) ? y-4 : 0;
+            Rect touchedRect = new Rect();
 
-        touchedRect.width = (x+4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
-        touchedRect.height = (y+4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
+            touchedRect.x = (x > 4) ? x - 4 : 0;
+            touchedRect.y = (y > 4) ? y - 4 : 0;
 
-        Mat touchedRegionRgba = mRgba.submat(touchedRect);
+            touchedRect.width = (x + 4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
+            touchedRect.height = (y + 4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
 
-        Mat touchedRegionHsv = new Mat();
-        Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
+            Mat touchedRegionRgba = mRgba_ball.submat(touchedRect);
 
-        // Calculate average color of touched region
-        mBlobColorHsv = Core.sumElems(touchedRegionHsv);
-        int pointCount = touchedRect.width*touchedRect.height;
-        for (int i = 0; i < mBlobColorHsv.val.length; i++)
-            mBlobColorHsv.val[i] /= pointCount;
+            Mat touchedRegionHsv = new Mat();
+            Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
 
-        mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);
+            // Calculate average color of touched region
+            mBlobColorHsv_ball = Core.sumElems(touchedRegionHsv);
+            int pointCount = touchedRect.width * touchedRect.height;
+            for (int i = 0; i < mBlobColorHsv_ball.val.length; i++)
+                mBlobColorHsv_ball.val[i] /= pointCount;
 
-        //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
-        mDetector.setHsvColor(mBlobColorHsv);
+            mBlobColorRgba_ball = converScalarHsv2Rgba(mBlobColorHsv_ball);
 
-        Imgproc.resize(mDetector.getSpectrum(), mSpectrum, SPECTRUM_SIZE, 0, 0, Imgproc.INTER_LINEAR_EXACT);
+            //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
+            mDetector_ball.setHsvColor(mBlobColorHsv_ball);
+            Log.w(TAG, mDetector_ball.getSpectrum().toString()+"SetHSV color ball");
 
-        mIsColorSelected = true;
+            Imgproc.resize(mDetector_ball.getSpectrum(), mSpectrum_ball, SPECTRUM_SIZE_ball, 0, 0, Imgproc.INTER_LINEAR_EXACT);
 
-        touchedRegionRgba.release();
-        touchedRegionHsv.release();
+            mIsColorSelected_ball = true;
 
-        return false; // don't need subsequent touch events
+            touchedRegionRgba.release();
+            touchedRegionHsv.release();
+
+            return true; // don't need subsequent touch events
+        }
+        else if(numScreenTouches>5){
+            Log.w(TAG, "1 touch");
+            numScreenTouches++;
+            int cols = mRgba_goal.cols();
+            int rows = mRgba_goal.rows();
+
+            int xOffset = (mOpenCvCameraView.getWidth() - cols) / 2;
+            int yOffset = (mOpenCvCameraView.getHeight() - rows) / 2;
+
+            int x = (int) event.getX() - xOffset;
+            int y = (int) event.getY() - yOffset;
+            //At this point, the x and the y coordinates of the touch are the variables x and y
+
+            if ((x < 0) || (y < 0) || (x > cols) || (y > rows))
+                return false;//This handles offscreen touches
+
+            Rect touchedRect = new Rect();
+
+            touchedRect.x = (x > 4) ? x - 4 : 0;
+            touchedRect.y = (y > 4) ? y - 4 : 0;
+
+            touchedRect.width = (x + 4 < cols) ? x + 4 - touchedRect.x : cols - touchedRect.x;
+            touchedRect.height = (y + 4 < rows) ? y + 4 - touchedRect.y : rows - touchedRect.y;
+
+            Mat touchedRegionRgba = mRgba_goal.submat(touchedRect);
+
+            Mat touchedRegionHsv = new Mat();
+            Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
+
+            // Calculate average color of touched region
+            mBlobColorHsv_goal = Core.sumElems(touchedRegionHsv);
+            int pointCount = touchedRect.width * touchedRect.height;
+            for (int i = 0; i < mBlobColorHsv_goal.val.length; i++) {
+                mBlobColorHsv_goal.val[i] /= pointCount;
+            }
+
+            mBlobColorRgba_goal = converScalarHsv2Rgba(mBlobColorHsv_goal);
+
+            //This sets the color of the ball in ColorBlobDetector, use mColorRadius to change range of colors
+            mDetector_goal.setHsvColor(mBlobColorHsv_goal);
+            Log.w(TAG, mDetector_goal.getSpectrum().toString()+"SetHSV color");
+            Imgproc.resize(mDetector_goal.getSpectrum(), mSpectrum_goal, SPECTRUM_SIZE_goal, 0, 0, Imgproc.INTER_LINEAR_EXACT);
+
+            mIsColorSelected_goal = true;
+
+            touchedRegionRgba.release();
+            touchedRegionHsv.release();
+
+            return false; // false for don't need subsequent touch events
+        }
+        else{
+            numScreenTouches++;
+            return false;
+        }
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-        mRgba = inputFrame.rgba();
+        mRgba_goal = inputFrame.rgba();
+        mRgba_ball = inputFrame.rgba();
         //change
-        if (mIsColorSelected) {
-            mDetector.process(mRgba);
-            List<MatOfPoint> contours = mDetector.getContours();
+        if (mIsColorSelected_ball && mIsColorSelected_goal) {
+            mDetector_ball.process(mRgba_goal);
+            mDetector_goal.process(mRgba_ball);
+            List<MatOfPoint> contours_ball = mDetector_ball.getContours();
+            List<MatOfPoint> contours_goal = mDetector_goal.getContours();
             //This draws the contours onto the screen
             double maxVal = 0;
             int maxValIdx = -1;
-            for (int contourIdx = 0; contourIdx < contours.size(); contourIdx++)
-            {
-                double contourArea = Imgproc.contourArea(contours.get(contourIdx));
-                if (maxVal < contourArea)
-                {
+            for (int contourIdx = 0; contourIdx < contours_ball.size(); contourIdx++) {
+                double contourArea = Imgproc.contourArea(contours_ball.get(contourIdx));
+                if (maxVal < contourArea) {
                     maxVal = contourArea;
                     maxValIdx = contourIdx;
                 }
             }
-            if (contours.size() > 0) {
-                MatOfPoint maxContour = contours.get(maxValIdx);
+            if (contours_ball.size() > 0) {
+                MatOfPoint maxContour = contours_ball.get(maxValIdx);
                 Moments M = Imgproc.moments(maxContour);
-                XValue= (int) (M.get_m10() / M.get_m00());
-                YValue = (int) (M.get_m01() / M.get_m00());
-//                setXValue();
-//                setYValue();
+                xball = (int) (M.get_m10() / M.get_m00());
+                yball = (int) (M.get_m01() / M.get_m00());
             }
-            Imgproc.drawContours(mRgba, contours, maxValIdx, CONTOUR_COLOR);
+            maxVal = 0;
+            maxValIdx = -1;
+            for (int contourIdx = 0; contourIdx < contours_goal.size(); contourIdx++) {
+                double contourArea = Imgproc.contourArea(contours_goal.get(contourIdx));
+                if (maxVal < contourArea) {
+                    maxVal = contourArea;
+                    maxValIdx = contourIdx;
+                }
+            }
+            if (contours_goal.size() > 0) {
+                MatOfPoint maxContour = contours_goal.get(maxValIdx);
+                Moments M = Imgproc.moments(maxContour);
+                xgoal = (int) (M.get_m10() / M.get_m00());
+                ygoal = (int) (M.get_m01() / M.get_m00());
+            }
             //detect circle contours and line contours here
-            Mat colorLabel = mRgba.submat(4, 68, 4, 68);
-            colorLabel.setTo(mBlobColorRgba);
+            Mat colorLabel = mRgba_ball.submat(4, 68, 4, 68);
+            colorLabel.setTo(mBlobColorRgba_ball);
 
-            Mat spectrumLabel = mRgba.submat(4, 4 + mSpectrum.rows(), 70, 70 + mSpectrum.cols());
-            mSpectrum.copyTo(spectrumLabel);
+            Mat spectrumLabel = mRgba_ball.submat(4, 4 + mSpectrum_ball.rows(), 70, 70 + mSpectrum_ball.cols());
+            mSpectrum_ball.copyTo(spectrumLabel);
 
         }
+        if (xball != null && yball != null && xgoal != null && ygoal!= null){
+            Log.e(TAG, "xball:"+xball.toString()+"yball"+yball.toString());
+            Log.e(TAG, "xgoal"+xgoal.toString()+"ygoal"+ygoal.toString());
+            checkCollision();
+        }
 
-        return mRgba;
+
+        return mRgba_ball;
     }
 
+    public void checkCollision(){
+        Double distancebetween = 0.0;
+        Double maxdistancebetween = 50.0;
+        distancebetween = Math.sqrt(Math.pow((xball - xgoal),2) + Math.pow((yball - ygoal),2));
+        if (distancebetween < maxdistancebetween) {
+            //call method here to launch a new class
+            Log.w(TAG, distancebetween.toString());
+            Log.w(TAG, "The distance is close enough to warrant a collision");
+        }
+
+    }
     private Scalar converScalarHsv2Rgba(Scalar hsvColor) {
         Mat pointMatRgba = new Mat();
         Mat pointMatHsv = new Mat(1, 1, CvType.CV_8UC3, hsvColor);
@@ -218,14 +332,4 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
-//    public void setXValue(){
-//        Intent in = new Intent(this, LiveVar.class);
-//        in.putExtra("BALL_X", XValue);
-//        startActivity(in);
-//    }
-//    public void setYValue(){
-//        Intent in = new Intent(this, LiveVar.class);
-//        in.putExtra("BALL_Y", YValue);
-//        startActivity(in);
-//    }
 }

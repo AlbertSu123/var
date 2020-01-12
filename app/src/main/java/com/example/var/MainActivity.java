@@ -26,15 +26,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         });
-        Button pickGoal=(Button)findViewById(R.id.button2);
-        pickGoal.setOnClickListener(new OnClickListener()
-        {   public void onClick(View v)
-        {
-            Intent intent = new Intent(MainActivity.this, PoleActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        });
         Button startVar=(Button)findViewById(R.id.button3);
 //        pickGoal.setOnClickListener(new OnClickListener()
 //        {   public void onClick(View v)
@@ -52,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /** Called when the user taps the Send button */
-    public void pickGoalIntent(View view) {
-        Intent intent = new Intent(this, PoleActivity.class);
-        startActivity(intent);
-    }
 
 //    /** Called when the user taps the Send button */
 //    public void startVar(View view) {
