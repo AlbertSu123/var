@@ -215,4 +215,5 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
         return new Scalar(pointMatRgba.get(0, 0));
     }
+
 }

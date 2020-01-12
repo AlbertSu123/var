@@ -26,11 +26,25 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         });
+        Button pickColor2=(Button)findViewById(R.id.button2);
+        pickColor.setOnClickListener(new OnClickListener()
+        {   public void onClick(View v)
+        {
+            Intent intent = new Intent(MainActivity.this, Instructions.class);
+            startActivity(intent);
+            finish();
+        }
+        });
     }
 
     /** Called when the user taps the Send button */
     public void pickColIntent(View view) {
         Intent intent = new Intent(this, BallActivity.class);
+        startActivity(intent);
+    }
+    /** Called when the user taps the Send button */
+    public void pickColIntent2(View view) {
+        Intent intent = new Intent(this, Instructions.class);
         startActivity(intent);
     }
 
