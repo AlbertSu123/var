@@ -14,15 +14,17 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Goal Check"
+        android:text="Goal Scored"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:visibility="invisible" />
     <Button
         android:id="@+id/goalScoredButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Goal Check"
+        android:text="Goal Scored"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:visibility="invisible" />
+
+
 
 </FrameLayout>
