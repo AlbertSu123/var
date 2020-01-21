@@ -22,9 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BallActivity" android:parentActivityName=".MainActivity">
+        <activity android:name=".Instructions"></activity>
+        <activity android:name=".Instructions2"></activity>
 
-        </activity>
+        <activity android:name=".Instructions3"></activity>
+
+
+        <activity android:name=".BallActivity" android:parentActivityName=".MainActivity"></activity>
+
     </application>
 
 </manifest>

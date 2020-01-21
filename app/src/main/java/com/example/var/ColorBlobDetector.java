@@ -19,7 +19,7 @@ public class ColorBlobDetector {
     private static double mMinContourArea = 0.1;
     // Color radius for range checking in HSV color space
     //Change this for a larger range of colors
-    private Scalar mColorRadius = new Scalar(25,50,50,0);
+    private Scalar mColorRadius = new Scalar(75,125,125,0);
     private Mat mSpectrum = new Mat();
     private List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
 

@@ -5,10 +5,10 @@
 5    android:versionName="3.4.3" >
 6
 7    <uses-sdk
-7-->/Users/Tanay/Projects/var/openCVLibrary343/src/main/AndroidManifest.xml:7:5-16
+7-->C:\Users\alber\AndroidStudioProjects\VAR\openCVLibrary343\src\main\AndroidManifest.xml:7:5-16
 8        android:minSdkVersion="8"
-8-->/Users/Tanay/Projects/var/openCVLibrary343/src/main/AndroidManifest.xml:7:5-16
+8-->C:\Users\alber\AndroidStudioProjects\VAR\openCVLibrary343\src\main\AndroidManifest.xml:7:5-16
 9        android:targetSdkVersion="26" />
-9-->/Users/Tanay/Projects/var/openCVLibrary343/src/main/AndroidManifest.xml:7:5-16
+9-->C:\Users\alber\AndroidStudioProjects\VAR\openCVLibrary343\src\main\AndroidManifest.xml:7:5-16
 10
 11</manifest>
