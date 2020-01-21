@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Demo
 Install the apk file on an android, the file is [here](https://github.com/AlbertSu123/var/blob/master/app/release/app-release.apk)
-
+<!--Finish this later
 ### Prerequisites
 
 What things you need to install the software and how to install them
@@ -90,3 +90,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
+-->
