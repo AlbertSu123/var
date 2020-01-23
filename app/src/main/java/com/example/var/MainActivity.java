@@ -12,6 +12,7 @@ import com.example.var.BallActivity;
 
 /**
  * The starter screen for the VAR app.
+ * Created on the initialization of the app.
  *
  */
 public class MainActivity extends AppCompatActivity {
