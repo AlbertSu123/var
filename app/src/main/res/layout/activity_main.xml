@@ -10,10 +10,10 @@
         android:layout_height="102dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="pickColIntent"
         android:text="Goal Line Technology"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryTest"
         android:typeface="monospace" />
 
     <Button
@@ -22,9 +22,9 @@
         android:layout_height="102dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="pickColIntent2"
         android:text="Instructions"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryTest"
         android:typeface="monospace" />
 </LinearLayout>
