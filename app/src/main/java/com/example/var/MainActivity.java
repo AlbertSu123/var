@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         pickColor2.setOnClickListener(new OnClickListener()
         {   public void onClick(View v)
         {
-            Intent intent = new Intent(MainActivity.this, Instructions.class);
+            Intent intent = new Intent(MainActivity.this, Main2Activity.class);
             startActivity(intent);
             finish();
         }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
     /** Called when the user taps the Send button */
     public void pickColIntent2(View view) {
-        Intent intent = new Intent(this, Instructions.class);
+        Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
     }
 

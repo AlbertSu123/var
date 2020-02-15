@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@color/colorPrimary"
-        android:text="Instructions for Use"
+        android:text="Instructions"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30dp"
         android:typeface="monospace" />

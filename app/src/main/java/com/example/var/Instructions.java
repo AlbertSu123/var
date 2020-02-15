@@ -14,8 +14,7 @@ public class Instructions extends AppCompatActivity {
         setContentView(R.layout.activity_instructions);
         Button pickColor=(Button)findViewById(R.id.button3);
         pickColor.setOnClickListener(new View.OnClickListener()
-        {   public void onClick(View v)
-        {
+        {   public void onClick(View v) {
             Intent intent = new Intent(Instructions.this, Instructions2.class);
             startActivity(intent);
             finish();
