@@ -263,7 +263,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     }
 
 
-    public void makeInputFrameList(CvCameraViewFrame inputFrame) {
+    public void videoFrameGenerator(CvCameraViewFrame inputFrame) {
         VideoCapture cap = new VideoCapture("FILENAME AND PATH HERE"); // PUT FILENAME AND PATH HERE!!!!!!!
 
         File file = new File("C:\\Users\\meetr\\Documents\\personal_projects\\var\\dataFrames");
