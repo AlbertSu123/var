@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Main3Activity"
+    tools:showIn="@layout/activity_main3"
+    android:background="@color/colorPrimaryDark">
+
+
+    <ImageView
+        android:layout_width="378dp"
+        android:layout_height="292dp"
+        android:layout_marginBottom="384dp"
+        android:padding="20dp"
+        android:src="@drawable/instructions2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText8"
+        app:layout_constraintVertical_bias="0.896"></ImageView>
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:padding="10dp"
+        android:text="Point the camera at the goal posts and tap the screen!"
+        android:textColor="@color/colorPrimaryTest"
+        android:textSize="24dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="495dp"></EditText>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

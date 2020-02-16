@@ -50,22 +50,22 @@ public class MainActivity extends AppCompatActivity {
         pickColor2.setOnClickListener(new OnClickListener()
         {   public void onClick(View v)
         {
-            Intent intent = new Intent(MainActivity.this, Instructions.class);
+            Intent intent = new Intent(MainActivity.this, Main2Activity.class);
             startActivity(intent);
             finish();
         }
         });
     }
 
-    /** Called when the user taps the Send button */
+    /** Called when the user taps the Goal Line Technology button */
     public void pickColIntent(View view) {
         Intent intent = new Intent(this, BallActivity.class);
         //startActivity(intent);
         basicReadWrite();
     }
-    /** Called when the user taps the Send button */
+    /** Called when the user taps the Instructions button */
     public void pickColIntent2(View view) {
-        Intent intent = new Intent(this, Instructions.class);
+        Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
     }
     public void basicReadWrite() {

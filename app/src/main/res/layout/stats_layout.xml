@@ -29,7 +29,10 @@
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="textPersonName"
+<<<<<<< HEAD
         android:textColor="@color/colorAccent"
+=======
+>>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
         android:text="Goals Made: "
         android:textSize="15dp" />
 
@@ -39,7 +42,10 @@
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="textPersonName"
+<<<<<<< HEAD
         android:textColor="@color/colorAccent"
+=======
+>>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
         android:text="Goals Attempted: "
         android:textSize="15dp" />
 
@@ -58,7 +64,10 @@
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="textPersonName"
+<<<<<<< HEAD
         android:textColor="@color/colorAccent"
+=======
+>>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
         android:text="Goals Made: "
         android:textSize="15dp" />
 
@@ -68,7 +77,10 @@
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="textPersonName"
+<<<<<<< HEAD
         android:textColor="@color/colorAccent"
+=======
+>>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
         android:text="Goals Attempted: "
         android:textSize="15dp"/>
 

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/seenum/projects/varsity/var/openCVLibrary343/src/main/assets"/><source path="/Users/seenum/projects/varsity/var/openCVLibrary343/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/seenum/projects/varsity/var/openCVLibrary343/src/debug/assets"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\meetr\Documents\personal_projects\var\openCVLibrary343\src\main\assets"/><source path="C:\Users\meetr\Documents\personal_projects\var\openCVLibrary343\build\intermediates\shader_assets\debug\compileDebugShaders\out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\meetr\Documents\personal_projects\var\openCVLibrary343\src\debug\assets"/></dataSet></merger>
+>>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
