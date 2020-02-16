@@ -263,8 +263,8 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     }
 
 
-    public void videoFrameGenerator(CvCameraViewFrame inputFrame) {
-        VideoCapture cap = new VideoCapture("FILENAME AND PATH HERE"); // PUT FILENAME AND PATH HERE!!!!!!!
+    public void videoToFrames() {
+        VideoCapture cap = new VideoCapture("C:\\Users\\meetr\\Documents\\personal_projects\\var\\video\\goalnewnew.mp4"); // PUT FILENAME AND PATH HERE!!!!!!!
 
         File file = new File("C:\\Users\\meetr\\Documents\\personal_projects\\var\\dataFrames");
         boolean isMkdir = file.mkdir();
@@ -279,6 +279,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             currentFrame += 1;
         }
         cap.release();
+        cv2.destroyAllWindows();
 //        return;
     }
 //    }
@@ -389,5 +390,10 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         Imgproc.cvtColor(pointMatHsv, pointMatRgba, Imgproc.COLOR_HSV2RGB_FULL, 4);
 
         return new Scalar(pointMatRgba.get(0, 0));
+    }
+
+    public static void main(String[] args) {
+        BallActivity act = new BallActivity();
+        act.videoToFrames();
     }
 }
