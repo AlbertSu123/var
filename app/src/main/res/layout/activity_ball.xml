@@ -25,6 +25,16 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:visibility="invisible" />
 
-
+    <Button
+        android:id="@+id/exitbutton"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="pickColIntent4"
+        android:text="See Statistics"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:typeface="monospace" />
 
 </FrameLayout>

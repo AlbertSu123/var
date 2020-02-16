@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Instructions3" />
+        <activity android:name="activity_instructions.xml" />
         <activity
             android:name=".BallActivity"
             android:parentActivityName=".MainActivity" />

@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /** Called when the user taps the Send button */
+    /** Called when the user taps the Goal Line Technology button */
     public void pickColIntent(View view) {
         Intent intent = new Intent(this, BallActivity.class);
         startActivity(intent);
     }
-    /** Called when the user taps the Send button */
+    /** Called when the user taps the Instructions button */
     public void pickColIntent2(View view) {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
