@@ -279,7 +279,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             currentFrame += 1;
         }
         cap.release();
-        cv2.destroyAllWindows();
+//        Imgcodecs.destroyAllWindows();
 //        return;
     }
 //    }
