@@ -1,5 +1,6 @@
 package com.example.var;
 
+import java.io.File;
 import java.util.List;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -13,11 +14,12 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.videoio.VideoCapture;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
-
+import org.opencv.imgcodecs.Imgcodecs;
 import android.widget.Button;
 import android.app.Activity;
 import android.content.Intent;
@@ -259,6 +261,27 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             return false;
         }
     }
+
+
+    public void makeInputFrameList(CvCameraViewFrame inputFrame) {
+        VideoCapture cap = new VideoCapture("FILENAME AND PATH HERE"); // PUT FILENAME AND PATH HERE!!!!!!!
+
+        File file = new File("C:\\Users\\meetr\\Documents\\personal_projects\\var\\dataFrames");
+        boolean isMkdir = file.mkdir();
+        int currentFrame = 0;
+        Mat pic = new Mat();
+        boolean isNotOver = true;
+
+        while (isNotOver) {
+            isNotOver = cap.read(pic);
+            String name = "./data/frame" + currentFrame + ".jpg";
+            Imgcodecs.imwrite("C:\\Users\\meetr\\Documents\\personal_projects\\var\\dataFrames\\" + name, pic);
+            currentFrame += 1;
+        }
+        cap.release();
+//        return;
+    }
+//    }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         mRgba_goal = inputFrame.rgba();
