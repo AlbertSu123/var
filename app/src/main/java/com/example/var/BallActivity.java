@@ -1,37 +1,39 @@
 package com.example.var;
 
-import java.util.List;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
+import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
-import android.widget.Button;
-import android.app.Activity;
-import android.content.Intent;
-import org.opencv.core.Point;
-
-import org.opencv.core.MatOfPoint2f;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.View.OnTouchListener;
-import android.view.SurfaceView;
+import java.util.List;
 
 public class BallActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
     private static final String TAG = "BallActivity";
@@ -59,6 +61,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
     private CameraBridgeViewBase mOpenCvCameraView;
     private Integer xgoal;
     private Integer ygoal;
+    private DatabaseReference mDatabase;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -83,6 +86,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
     }
 
+
     /**
      * Called when the activity is first created.
      */
@@ -98,6 +102,21 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.color_blob_detection_activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        Button pickColor2=(Button)findViewById(R.id.exitbutton);
+        pickColor2.setOnClickListener(new View.OnClickListener()
+        {   public void onClick(View v)
+        {
+            Intent intent = new Intent(BallActivity.this, Stats.class);
+            startActivity(intent);
+            finish();
+        }
+        });
+    }
+    /** Called when the user taps the Send button */
+    public void pickColIntent2(View view) {
+        Intent intent = new Intent(this, Stats.class);
+        startActivity(intent);
     }
 
     @Override
@@ -204,6 +223,10 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
             touchedRegionHsv.release();
 
             return true; // don't need subsequent touch events
+        }
+        else if(numScreenTouches > 20){
+            callDatabase("goalscored");
+            return false;
         }
         else if(numScreenTouches>5){
             Log.w(TAG, "1 touch");
@@ -327,7 +350,7 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
                 {
                     Button playButton = (Button) findViewById(R.id.goalScoredButton);
                     playButton.setVisibility(View.VISIBLE);
-
+                    callDatabase("goalscored");
 
                 }
             });
@@ -347,6 +370,16 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
 
 
         return mRgba_ball;
+    }
+
+    public void callDatabase(String key){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        try{
+            mDatabase.child(key).setValue("4");
+        }
+        catch (Exception e){
+            Log.e(TAG, e.toString());
+        }
     }
 
     public void checkCollision(){

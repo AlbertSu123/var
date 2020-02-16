@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "549335023426",
+    "firebase_url": "https://varnotifications-fd363.firebaseio.com",
+    "project_id": "varnotifications-fd363",
+    "storage_bucket": "varnotifications-fd363.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549335023426:android:4eca547e7732f24eef12db",
+        "android_client_info": {
+          "package_name": "com.example.var"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549335023426-46qmo7ov9m533husooq4orn0kq2sndtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf00E925oUbo0hO6SJFv7xq0au4wR4koo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549335023426-46qmo7ov9m533husooq4orn0kq2sndtl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
