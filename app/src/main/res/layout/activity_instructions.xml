@@ -9,9 +9,9 @@
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical|center_horizontal"
         android:background="@color/colorPrimary"
-        android:text="Instructions for Use"
+        android:text="Instructions"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30dp"
         android:typeface="monospace" />
@@ -29,10 +29,11 @@
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="82dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Point the camera at the ball"
+        android:text="Point the camera at the ball
+"
         android:textColor="@color/colorPrimaryDark"
         android:typeface="monospace" />
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@color/colorPrimary"
+        android:text="Match Statistics"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30dp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/team1stats"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Team 1 Stats"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/madeGoals1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Goals Made: "
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/goalAttempts1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Goals Attempted: "
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/team2stats"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Team 2 Stats"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/madeGoals2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Goals Made: "
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/goalAttempts2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Goals Attempted: "
+        android:textSize="15dp"/>
+
+
+</LinearLayout>
