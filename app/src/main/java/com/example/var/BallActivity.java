@@ -102,20 +102,16 @@ public class BallActivity extends Activity implements OnTouchListener, CvCameraV
         }
     };
 
-    //This is the constructor
     public BallActivity() {
 
     }
-<<<<<<< HEAD
 
 
-=======
     /** Called when the user taps the Send button */
     public void pickColIntent(View view) {
         Intent intent = new Intent(this, Stats.class);
         startActivity(intent);
     }
->>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
     /**
      * Called when the activity is first created.
      */
