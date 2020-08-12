@@ -1,6 +1,5 @@
 package com.example.var;
 
-<<<<<<< HEAD
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +14,8 @@ import android.widget.Button;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-=======
 import java.io.File;
 import java.util.List;
->>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
-
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -35,12 +31,10 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-<<<<<<< HEAD
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import java.util.List;
-=======
 import org.opencv.videoio.VideoCapture;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
@@ -61,7 +55,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.SurfaceView;
->>>>>>> db1a78de409ef2fa6f767057f8617c3bc3b188eb
 
 public class BallActivity extends Activity implements OnTouchListener, CvCameraViewListener2 {
     private static final String TAG = "BallActivity";
