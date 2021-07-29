@@ -1,3 +1,8 @@
+<!-- ABOUT THE PROJECT -->
+## About vAR
+Even though rudimentary video assistant referees for soccer is already implemented in FIFA sanctioned soccer tournaments, the cost of installation for goal-line technology, a small subset of the video assistant referee ecosystem starts from [300,000 USD](https://www.engadget.com/2017/08/01/fifa-var-goal-line-technology-future-of-soccer/?guccounter=1). We are trying to legitimize soccer games around the world that can't themselves afford this technology.
+
+In addition, a major complaint of the video assitant referee system is that it slows down the pace of the game. Instead of making immediate on field decisions, the referee will consult a TV monitor or another referee at a TV monitor to rewatch the moments of interest. However, vARsity will make these decisions instantaneous and a decision will be sent to the referee immediatetly through a phone or smart watch notification.
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -31,15 +36,6 @@
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
-
-
-
-<!-- ABOUT THE PROJECT -->
-## About vAR
-Even though rudimentary video assistant referees for soccer is already implemented in FIFA sanctioned soccer tournaments, the cost of installation for goal-line technology, a small subset of the video assistant referee ecosystem starts from [300,000 USD](https://www.engadget.com/2017/08/01/fifa-var-goal-line-technology-future-of-soccer/?guccounter=1). We are trying to legitimize soccer games around the world that can't themselves afford this technology.
-
-In addition, a major complaint of the video assitant referee system is that it slows down the pace of the game. Instead of making immediate on field decisions, the referee will consult a TV monitor or another referee at a TV monitor to rewatch the moments of interest. However, vARsity will make these decisions instantaneous and a decision will be sent to the referee immediatetly through a phone or smart watch notification.
-
 
 ### Built With
 
@@ -84,10 +80,11 @@ This project is finished and no longer being maintained. If you have any issues,
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create your Feature Branch (`git checkout -b feature/futsaldetection`)
+3. Add your changes to git (`git add .`)
+4. Commit your Changes (`git commit -m 'Trained a tensorflow lite model for futsal goals`)
+5. Push to the Branch (`git push origin feature/futsaldetection`)
+6. Open a Pull Request
 
 
 
@@ -95,7 +92,6 @@ Contributions are what make the open source community such an amazing place to b
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 
 
 <!-- CONTACT -->
